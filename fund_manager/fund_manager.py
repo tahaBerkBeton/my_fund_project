@@ -203,6 +203,35 @@ def update_fund(fund_name):
         session.close()
 
 
+def update_all_funds():
+    """
+    Updates all funds in the database by fetching the latest prices for each position
+    and creating a valuation snapshot for each fund.
+    """
+    session = get_session()
+    try:
+        funds = session.query(Fund).all()
+        for fund in funds:
+            total_value = fund.current_cash
+            positions = session.query(FundPosition).filter_by(fund_id=fund.id).all()
+            for pos in positions:
+                if pos.shares_held > 0:
+                    price = fetch_live_price(pos.ticker)
+                    total_value += price * pos.shares_held
+
+            # Create a new valuation record for this fund
+            valuation = FundValuation(
+                fund_id=fund.id,
+                total_value=total_value
+            )
+            session.add(valuation)
+            fund.last_update = datetime.utcnow()
+
+        session.commit()
+    finally:
+        session.close()
+
+
 def get_fund_composition(fund_name):
     """
     Returns a dict with up-to-date info about the fund's composition.
