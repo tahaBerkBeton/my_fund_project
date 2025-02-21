@@ -82,7 +82,7 @@ Dependencies (as listed in `requirements.txt`):
 
 1. **Clone or download** the repository:
    ```bash
-   git clone https://github.com/yourusername/my_fund_project.git
+   git clone [https://github.com/yourusername/my_fund_project.git](https://github.com/tahaBerkBeton/my_fund_project.git)
    cd my_fund_project
    ```
 
