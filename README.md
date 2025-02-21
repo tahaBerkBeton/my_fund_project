@@ -202,7 +202,7 @@ Potential enhancements include:
 
 ## License
 
-[Include your license information here, e.g., MIT License, Apache License, etc.]
+
 
 ---
 
