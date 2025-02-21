@@ -197,9 +197,3 @@ Potential enhancements include:
 4. **GUI or Web Interface**: Develop a desktop or web application interface (using frameworks like Flask, Django, or React) for a more user-friendly experience.
 5. **Performance Enhancements**: Implement batch processing, caching, or asynchronous updates to reduce reliance on frequent external API calls.
 
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
