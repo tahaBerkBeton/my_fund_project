@@ -17,13 +17,14 @@ It is meant as a **starting point** for more advanced portfolio management appli
 
 1. [Features](#features)
 2. [Project Structure](#project-structure)
-3. [Requirements](#requirements)
-4. [Installation and Setup](#installation-and-setup)
-5. [Running the Demo](#running-the-demo)
-6. [Usage](#usage)
-7. [Testing and Visualization](#testing-and-visualization)
-8. [Extending the Project](#extending-the-project)
-9. [License](#license)
+3. [Database Structure](#database-structure)
+4. [Requirements](#requirements)
+5. [Installation and Setup](#installation-and-setup)
+6. [Running the Demo](#running-the-demo)
+7. [Usage](#usage)
+8. [Testing and Visualization](#testing-and-visualization)
+9. [Extending the Project](#extending-the-project)
+10. [License](#license)
 
 ---
 
@@ -61,6 +62,55 @@ my_fund_project/
 ├── requirements.txt          # Python dependencies.
 └── README.md                 # This file.
 ```
+
+---
+
+## Database Structure
+
+The database is designed using SQLAlchemy with the following key tables:
+
+1. **`funds` Table**  
+   - **Purpose**: Stores core information about each fund.
+   - **Fields**:
+     - `id` (Primary Key): Unique identifier for each fund.
+     - `name`: A unique name for the fund.
+     - `creation_date`: Timestamp when the fund was created.
+     - `current_cash`: Current cash available in the fund.
+     - `last_update`: The last time the fund's valuation was updated.
+
+2. **`fund_positions` Table**  
+   - **Purpose**: Maintains the stock positions for each fund.
+   - **Fields**:
+     - `id` (Primary Key): Unique identifier for each position.
+     - `fund_id` (Foreign Key): Links to the corresponding fund in the `funds` table.
+     - `ticker`: The stock symbol (e.g., AAPL, TSLA).
+     - `shares_held`: The number of shares held.
+     - `last_purchase_price`: The average purchase price of the shares.
+     - `last_purchase_date`: Timestamp of the last purchase for that position.
+
+3. **`fund_valuations` Table**  
+   - **Purpose**: Tracks historical valuations of each fund.
+   - **Fields**:
+     - `id` (Primary Key): Unique identifier for each valuation record.
+     - `fund_id` (Foreign Key): Links to the corresponding fund.
+     - `valuation_date`: Timestamp when the valuation snapshot was taken.
+     - `total_value`: The total value of the fund (cash plus market value of all positions).
+
+4. **`operations` Table**  
+   - **Purpose**: Logs all operations (creation, buy, sell, etc.) performed on funds.
+   - **Fields**:
+     - `id` (Primary Key): Unique identifier for each operation.
+     - `fund_id` (Foreign Key): Links to the corresponding fund.
+     - `ticker` (Nullable): The stock symbol involved in the operation (if applicable).
+     - `operation_type`: The type of operation (e.g., CREATE, BUY, SELL).
+     - `shares`: The number of shares involved (if applicable).
+     - `price`: The price per share at the time of the operation.
+     - `operation_date`: Timestamp when the operation occurred.
+
+This structure was chosen to:
+- **Ensure Data Integrity**: Relationships via foreign keys enforce consistency between funds, their positions, valuations, and operations.
+- **Enable Historical Tracking**: By appending new records rather than updating existing ones, the system preserves a complete history of all operations and valuation snapshots.
+- **Support Flexibility**: The modular design makes it easy to extend functionality (e.g., adding new asset types or more detailed analytics).
 
 ---
 
