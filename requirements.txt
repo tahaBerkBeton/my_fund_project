@@ -1,0 +1,5 @@
+SQLAlchemy
+yfinance
+requests
+pandas
+matplotlib
