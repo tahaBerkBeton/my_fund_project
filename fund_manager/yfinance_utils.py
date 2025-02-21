@@ -11,5 +11,6 @@ def fetch_live_price(ticker: str) -> float:
     df = ticker_data.history(period="1d")
     if df.empty:
         raise ValueError(f"No market data returned for ticker: {ticker}")
-    last_close = df['Close'][-1]
+    # Use .iloc[-1] instead of [-1] to avoid the FutureWarning
+    last_close = df['Close'].iloc[-1]
     return float(last_close)
