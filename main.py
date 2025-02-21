@@ -9,30 +9,32 @@ from fund_manager.fund_manager import (
 )
 
 def main():
-    # Initialize the database (create tables if not exist)
+    # Initialize the database
     init_db()
-
+    
     fund_name = "MyFirstFund"
     print(f"Creating fund: {fund_name} with $100000 ...")
-    create_fund(fund_name, 100000)
-
+    try:
+        create_fund(fund_name, 100000)
+    except Exception as e:
+        print(e)
+    
     print("\nBuying 10 shares of AAPL ...")
     buy_shares(fund_name, "AAPL", 10)
-
+    
     print("Buying 5 shares of TSLA ...")
     buy_shares(fund_name, "TSLA", 5)
-
+    
     print("\nGetting current composition:")
-    composition_1 = get_fund_composition(fund_name)
-    print(composition_1)
-
+    composition = get_fund_composition(fund_name)
+    print(composition)
+    
     print("\nSelling 2 shares of AAPL ...")
     sell_shares(fund_name, "AAPL", 2)
-
+    
     print("Getting updated composition:")
-    composition_2 = get_fund_composition(fund_name)
-    print(composition_2)
+    composition = get_fund_composition(fund_name)
+    print(composition)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
